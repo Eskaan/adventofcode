@@ -5,7 +5,7 @@ fn main() {
     let mut enabled = true;
     let mut count = 0;
 
-    while input.len() > 0 {
+    while !input.is_empty() {
         if enabled && input.starts_with("mul(") {
             input.replace_range(0..4, "");
             let num1 = parse_num(&mut input);
@@ -33,14 +33,14 @@ fn main() {
 
 fn parse_num(input: &mut String) -> usize {
     let mut buf = String::new();
-    while let Some(ch) = input.chars().nth(0) {
-        if ch.is_digit(10) {
+    while let Some(ch) = input.chars().next() {
+        if ch.is_ascii_digit() {
             buf.push(ch);
             input.remove(0);
         } else {
-            return buf.parse().unwrap_or(0)
+            return buf.parse().unwrap_or(0);
         }
     }
 
-    return 0;
+    0
 }

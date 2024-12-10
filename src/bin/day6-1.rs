@@ -1,7 +1,7 @@
 fn main() {
     let input = std::fs::read_to_string("input/day6.txt").unwrap();
     // Note that the matrix is read in with (y, x)
-    let m = Matrix::new(input.clone());
+    let m = Matrix::new(&input);
 
     let start_index = input
         .chars()
@@ -72,12 +72,12 @@ struct Matrix {
 }
 
 impl Matrix {
-    pub fn new(input: String) -> Self {
+    pub fn new(input: &str) -> Self {
         let size = input.lines().count();
         input.lines().for_each(|l| assert_eq!(l.len(), size));
 
         Self {
-            size: size,
+            size,
             inner: input
                 .lines()
                 .map(|l| l.chars().map(|ch| ch == '#').collect())

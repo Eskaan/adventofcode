@@ -33,9 +33,9 @@ fn count_recursive(expected: usize, current: usize, nums: &[usize]) -> bool {
             || expected == current * nums[0]
             || expected == concat(current, nums[0]);
     }
-    return count_recursive(expected, current + nums[0], &nums[1..])
+    count_recursive(expected, current + nums[0], &nums[1..])
         || count_recursive(expected, current * nums[0], &nums[1..])
-        || count_recursive(expected, concat(current, nums[0]), &nums[1..]);
+        || count_recursive(expected, concat(current, nums[0]), &nums[1..])
 }
 
 fn concat(a: usize, b: usize) -> usize {

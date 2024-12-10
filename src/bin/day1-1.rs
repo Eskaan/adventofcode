@@ -17,16 +17,13 @@ fn main() {
 
     // Actual Math
 
-    list1.sort();
-    list2.sort();
+    list1.sort_unstable();
+    list2.sort_unstable();
 
     let res = list1
         .into_iter()
-        .zip(list2.into_iter())
-        .fold(0, |fold, (i1, i2)| {
-            println!("{} {} diff {}", i1, i2, (i1 - i2).abs());
-            fold + (i1 - i2).abs()
-        });
+        .zip(list2)
+        .fold(0, |fold, (i1, i2)| fold + (i1 - i2).abs());
 
     println!("{res}");
 }

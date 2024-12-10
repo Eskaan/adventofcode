@@ -9,7 +9,7 @@ const SEARCH: [(isize, isize); 8] = [
 ];
 
 fn main() {
-    let m = Matrix::new(fs::read_to_string("input/day4.txt").unwrap());
+    let m = Matrix::new(&fs::read_to_string("input/day4.txt").unwrap());
     let mut count = 0;
 
     for x in 0..m.size {
@@ -34,12 +34,12 @@ struct Matrix {
 }
 
 impl Matrix {
-    pub fn new(input: String) -> Self {
+    pub fn new(input: &str) -> Self {
         let size = input.lines().count();
         input.lines().for_each(|l| assert_eq!(l.len(), size));
 
         Self {
-            size: size,
+            size,
             inner: input.lines().map(|l| l.chars().collect()).collect(),
         }
     }

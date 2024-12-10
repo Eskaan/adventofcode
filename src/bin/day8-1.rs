@@ -9,14 +9,12 @@ fn main() {
         line.char_indices()
             .filter(|(_, ch)| *ch != '.')
             .for_each(|(ii, ch)| {
-                if !antennas.contains_key(&ch) {
-                    antennas.insert(ch, Vec::new());
-                }
+                antennas.entry(ch).or_default();
                 antennas
                     .get_mut(&ch)
                     .unwrap()
                     .push((i as isize, ii as isize));
-            })
+            });
     });
 
     let mut antinodes: Vec<(isize, isize)> = Vec::new();
@@ -34,24 +32,20 @@ fn main() {
 
                 let ax = fx + dx;
                 let ay = fy + dy;
-                if ax >= 0 && ax < size && ay >= 0 && ay < size {
-                    if ax != sx || ay != sy {
-                        antinodes.push((ax, ay));
-                    }
+                if ax >= 0 && ax < size && ay >= 0 && ay < size && (ax != sx || ay != sy) {
+                    antinodes.push((ax, ay));
                 }
 
                 let ax = fx - dx;
                 let ay = fy - dy;
-                if ax >= 0 && ax < size && ay >= 0 && ay < size {
-                    if ax != sx || ay != sy {
-                        antinodes.push((ax, ay));
-                    }
+                if ax >= 0 && ax < size && ay >= 0 && ay < size && (ax != sx || ay != sy) {
+                    antinodes.push((ax, ay));
                 }
             }
         }
     }
 
-    antinodes.sort();
+    antinodes.sort_unstable();
     antinodes.dedup();
 
     println!("{}", antinodes.len());

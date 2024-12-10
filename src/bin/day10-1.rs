@@ -1,8 +1,7 @@
 fn main() {
     let input = std::fs::read_to_string("input/day10.txt").unwrap();
     // Note that the matrix is read in with (y, x)
-    let m = Matrix::new(input.clone());
-    println!("{:?}", m.inner);
+    let m = Matrix::new(&input);
 
     let mut count = 0;
     for x in 0..m.inner.len() as isize {
@@ -10,10 +9,9 @@ fn main() {
             if m.get(x, y).unwrap() == 0 {
                 let mut peaks = Vec::new();
                 paths_recursive(&m, 0, x, y, &mut peaks);
-                peaks.sort();
+                peaks.sort_unstable();
                 peaks.dedup();
                 count += peaks.len();
-                println!("{}", peaks.len());
             }
         }
     }
@@ -39,7 +37,7 @@ struct Matrix {
 }
 
 impl Matrix {
-    pub fn new(input: String) -> Self {
+    pub fn new(input: &str) -> Self {
         let size = input.lines().count();
         input.lines().for_each(|l| assert_eq!(l.len(), size));
 

@@ -31,6 +31,6 @@ fn count_recursive(expected: usize, current: usize, nums: &[usize]) -> bool {
     if nums.len() <= 1 {
         return expected == current + nums[0] || expected == current * nums[0];
     }
-    return count_recursive(expected, current + nums[0], &nums[1..])
-        || count_recursive(expected, current * nums[0], &nums[1..]);
+    count_recursive(expected, current + nums[0], &nums[1..])
+        || count_recursive(expected, current * nums[0], &nums[1..])
 }

@@ -47,7 +47,7 @@ fn main() {
                                     println!("Noop");
                                     break;
                                 }
-                                assert!(!(layout[src].is_none() || layout[dst].is_some()), );
+                                assert!(!(layout[src].is_none() || layout[dst].is_some()),);
                                 layout.swap(src, dst);
                             }
                             break;

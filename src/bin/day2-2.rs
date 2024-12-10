@@ -8,14 +8,14 @@ fn main() {
             l.split(' ')
                 .map(|s| s.parse::<usize>().expect("Input not a number"))
         })
-        .filter(|split| check_list(split.clone().collect()))
+        .filter(|split| check_list(&split.clone().collect::<Vec<usize>>()))
         .count();
 
     println!("{res}");
 }
 
-fn check_list(list: Vec<usize>) -> bool {
-    let copy = list.clone();
+fn check_list(list: &[usize]) -> bool {
+    let copy = list.to_owned();
     let mut copy_rev = copy.clone();
     copy_rev.reverse();
 
@@ -24,7 +24,7 @@ fn check_list(list: Vec<usize>) -> bool {
     }
 
     for i in 0..list.len() {
-        let mut copy = list.clone();
+        let mut copy = list.to_owned();
         copy.remove(i);
         let mut copy_rev = copy.clone();
         copy_rev.reverse();
@@ -34,20 +34,20 @@ fn check_list(list: Vec<usize>) -> bool {
         }
     }
 
-    return false;
+    false
 }
 
 fn check_list_inc(mut list: Vec<usize>) -> bool {
-    let mut last = list.pop().expect("At least one input per line!");
+    let mut last_item = list.pop().expect("At least one input per line!");
     while let Some(now) = list.pop() {
-        let diff = if now > last { now - last } else { last - now };
+        let diff = now.abs_diff(last_item);
 
-        if diff > 3 || diff < 1 || now > last {
+        if !(1..=3).contains(&diff) || now > last_item {
             return false;
         }
 
-        last = now;
+        last_item = now;
     }
 
-    return true;
+    true
 }

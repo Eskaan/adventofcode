@@ -5,13 +5,13 @@ fn main() {
         .unwrap()
         .lines()
         .map(|l| {
-            l.split(" ")
+            l.split(' ')
                 .map(|s| s.parse::<usize>().expect("Input not a number"))
         })
         .map(|mut split| {
             let mut inc = None;
             let mut last = split.next().expect("At least one input per line!");
-            while let Some(now) = split.next() {
+            for now in split.by_ref() {
                 if now > last && now - last <= 3 {
                     match inc {
                         None => inc = Some(true),
@@ -31,7 +31,7 @@ fn main() {
                 last = now;
             }
 
-            return true;
+            true
         })
         .filter(|res| *res)
         .count();

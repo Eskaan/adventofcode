@@ -4,7 +4,7 @@ use std::fs;
 const SEARCH: [(isize, isize); 4] = [(-1, 1), (1, -1), (1, 1), (-1, -1)];
 
 fn main() {
-    let m = Matrix::new(fs::read_to_string("input/day4.txt").unwrap());
+    let m = Matrix::new(&fs::read_to_string("input/day4.txt").unwrap());
     let mut count = 0;
 
     for x in 0..m.size {
@@ -15,7 +15,7 @@ fn main() {
             let mut matches = 0;
             for (xr, yr) in SEARCH {
                 if m.get_relative(x, y, xr, yr) == Some('M')
-                    && m.get_relative(x, y, xr * -1, yr * -1) == Some('S')
+                    && m.get_relative(x, y, -xr, -yr) == Some('S')
                 {
                     matches += 1;
                 }
@@ -35,12 +35,12 @@ struct Matrix {
 }
 
 impl Matrix {
-    pub fn new(input: String) -> Self {
+    pub fn new(input: &str) -> Self {
         let size = input.lines().count();
         input.lines().for_each(|l| assert_eq!(l.len(), size));
 
         Self {
-            size: size,
+            size,
             inner: input.lines().map(|l| l.chars().collect()).collect(),
         }
     }

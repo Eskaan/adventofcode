@@ -4,7 +4,11 @@ fn main() {
         .unwrap()
         .trim()
         .lines()
-        .map(|line| line.chars().map(|ch| ch as usize - '0' as usize ).collect::<Vec<_>>())
+        .map(|line| {
+            line.chars()
+                .map(|ch| ch as usize - '0' as usize)
+                .collect::<Vec<_>>()
+        })
         .collect::<Vec<_>>();
 
     let mut counter = 0;
@@ -15,7 +19,7 @@ fn main() {
 
         for digit in (0..12).rev() {
             let mut max_cur = 0;
-            for i in max_index..bat.len()-digit {
+            for i in max_index..bat.len() - digit {
                 if bat[i] > max_cur {
                     max_cur = bat[i];
                     max_index = i;
